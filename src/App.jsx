@@ -1,6 +1,4 @@
-// App.js
-import React from 'react';
-import QuizApp from './QuizApp';
+import QuizApp from './quiz';
 
 function App() {
   return (

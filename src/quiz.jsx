@@ -1,41 +1,29 @@
-// QuizApp.js
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { ques }   from './question';
 
 const QuizApp = () => {
-  const [questions, setQuestions] = useState([
-    {
-      question: 'What is the capital of France?',
-      options: ['Berlin', 'Madrid', 'Paris', 'Rome'],
-      correctAnswer: 'Paris',
-      userAnswer: null,
-    },
-    {
-      question: 'Which planet is known as the Red Planet?',
-      options: ['Mars', 'Venus', 'Jupiter', 'Saturn'],
-      correctAnswer: 'Mars',
-      userAnswer: null,
-    },
-    // Add more questions as needed
-  ]);
-
+  const [questions, setQuestions] = useState(ques);
   const [score, setScore] = useState(0);
 
   const handleAnswer = (questionIndex, selectedOption) => {
+    console.log("questionIndex --->", questionIndex);
+    console.log("selectedOption --->", selectedOption);
     const newQuestions = [...questions];
+    console.log("newQuestions --->", newQuestions);
     newQuestions[questionIndex].userAnswer = selectedOption;
     setQuestions(newQuestions);
   };
 
-  const calculateScore = () => {
-    const newScore = questions.reduce(
-      (accumulator, question) =>
-        question.userAnswer === question.correctAnswer
-          ? accumulator + 1
-          : accumulator,
-      0
-    );
-    setScore(newScore);
-  };
+const calculateScore = () => {
+  const newScore = questions.reduce((accumulator, question) => {
+    if (question.userAnswer === question.correctAnswer) {
+      return accumulator + 1;
+    } else {
+      return accumulator;
+    }
+  }, 0);
+  setScore(newScore);
+};
 
   return (
     <div>
@@ -52,7 +40,11 @@ const QuizApp = () => {
                     name={`question-${index}`}
                     value={option}
                     checked={question.userAnswer === option}
-                    onChange={() => handleAnswer(index, option)}
+                    onChange={() => {
+                      // console.log(`question-${index}`);
+                      // console.log(option);
+                      handleAnswer(index, option);
+                    }}
                   />
                   {option}
                 </label>
